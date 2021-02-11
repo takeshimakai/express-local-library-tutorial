@@ -21,18 +21,24 @@ const AuthorSchema = new Schema(
 
 // Virtual for author's full name
 AuthorSchema
-  .virtual('name')
-  .get(() => `${family_name}, ${first_name}`);
+.virtual('name')
+.get(function () {
+  return this.family_name + ', ' + this.first_name;
+});
 
 // Virtual for author's lifespan
 AuthorSchema
-  .virtual('lifespan')
-  .get(() => (date_of_death.getYear() - date_of_birth.getYear()).toString());
+.virtual('lifespan')
+.get(function () {
+  return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
+});
 
 // Virtual for author's URL
 AuthorSchema
-  .virtual('url')
-  .get(() => `/catalog/author/${_id}`);
+.virtual('url')
+.get(function () {
+  return '/catalog/author/' + this._id;
+});
 
-// Export model
+//Export model
 module.exports = mongoose.model('Author', AuthorSchema);
