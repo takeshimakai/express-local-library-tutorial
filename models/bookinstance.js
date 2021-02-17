@@ -40,5 +40,23 @@ BookInstanceSchema
   return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED);
 });
 
+BookInstanceSchema
+.virtual('year_month_date')
+.get(function() {
+  const year = this.due_back.getFullYear().toString();
+  let month = (this.due_back.getMonth() + 1).toString();
+  let date = this.due_back.getDate().toString();
+
+  if (month.length < 2) {
+    month = '0' + month;
+  }
+
+  if (date.length === 1) {
+    date = '0' + date;
+  }
+
+  return `${year}-${month}-${date}`;
+})
+
 // Export model
 module.exports = mongoose.model('BookInstance', BookInstanceSchema);
