@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -12,7 +13,7 @@ const app = express();
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const dev_db_url = 'mongodb+srv://***REMOVED***:***REMOVED***@cluster0.raaaq.mongodb.net/local_library?retryWrites=true&w=majority';
+const dev_db_url = `mongodb+srv://${MONGO_DB_USER}:${MONGO_DB_PASS}@cluster0.raaaq.mongodb.net/local_library?retryWrites=true&w=majority`;
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 const db = mongoose.connection;
